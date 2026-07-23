@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Log Analysis Result</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<h1>Log Analysis Result</h1>
+
+<p>Total lines: {{ total_lines }}</p>
+<p>Errors: {{ error_count }}</p>
+<p>Warnings: {{ warning_count }}</p>
+<p>Info: {{ info_count }}</p>
+
+<canvas id="logChart"></canvas>
+
+<script>
+const errorCount   = {{ error_count|tojson }};
+const warningCount = {{ warning_count|tojson }};
+const infoCount    = {{ info_count|tojson }};
+
+const ctx = document.getElementById('logChart').getContext('2d');
+new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['ERROR', 'WARNING', 'INFO'],
+        datasets: [{
+            label: 'Log Count',
+            data: [errorCount, warningCount, infoCount],
+            backgroundColor: ['red','orange','green']
+        }]
+    }
+});
+</script>
+</body>
+</html>
